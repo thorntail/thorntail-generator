@@ -1,0 +1,4 @@
+export JAVA_HOME=/etc/alternatives/java_sdk_1.8.0/
+export M2_HOME=~/diy/apache-maven-3.3.9
+~/diy/apache-maven-3.3.9/bin/mvn clean install
+java -jar target/swarm-generator-swarm.jar
