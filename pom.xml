@@ -15,18 +15,6 @@
                <failOnMissingWebXml>false</failOnMissingWebXml>
             </configuration>
          </plugin>
-         <plugin>
-            <groupId>org.wildfly.swarm</groupId>
-            <artifactId>wildfly-swarm-plugin</artifactId>
-            <version>${version.wildfly-swarm}</version>
-            <executions>
-               <execution>
-                  <goals>
-                     <goal>package</goal>
-                  </goals>
-               </execution>
-            </executions>
-         </plugin>
       </plugins>
    </build>
    <packaging>war</packaging>
@@ -65,4 +53,54 @@
          <version>3.0.0.BETA02</version>
       </dependency>
    </dependencies>
+   <profiles>
+      <profile>
+         <!-- When built in OpenShift the 'openshift' profile will be used when invoking mvn. -->
+         <!-- Use this profile for any OpenShift specific customization your app will need. -->
+         <!-- By default that is to put the resulting archive into the 'deployments' folder. -->
+         <!-- http://maven.apache.org/guides/mini/guide-building-for-different-environments.html -->
+         <id>openshift</id>
+         <build>
+            <finalName>online</finalName>
+            <plugins>
+               <plugin>
+                  <groupId>org.apache.maven.plugins</groupId>
+                  <artifactId>maven-war-plugin</artifactId>
+                  <version>2.3</version>
+                  <configuration>
+                     <failOnMissingWebXml>false</failOnMissingWebXml>
+                     <outputDirectory>deployments</outputDirectory>
+                     <warName>ROOT</warName>
+                  </configuration>
+               </plugin>
+            </plugins>
+         </build>
+      </profile>
+
+      <profile>
+         <id>swarm</id>
+         <activation>
+            <property>
+               <name>swarm</name>
+               <value>true</value>
+            </property>
+         </activation>
+         <build>
+            <plugins>
+               <plugin>
+                  <groupId>org.wildfly.swarm</groupId>
+                  <artifactId>wildfly-swarm-plugin</artifactId>
+                  <version>${version.wildfly-swarm}</version>
+                  <executions>
+                     <execution>
+                        <goals>
+                           <goal>package</goal>
+                        </goals>
+                     </execution>
+                  </executions>
+               </plugin>
+            </plugins>
+         </build>
+      </profile>
+   </profiles>
 </project>
