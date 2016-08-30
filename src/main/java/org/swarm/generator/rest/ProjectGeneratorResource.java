@@ -78,7 +78,7 @@ public class ProjectGeneratorResource
       {
          return true;
       }
-      return Arrays.stream(dependencies).anyMatch(d -> d.contains("jaxrs"));
+      return Arrays.stream(dependencies).anyMatch(d -> d.contains("jaxrs") || d.contains("microprofile"));
    }
 
 }
