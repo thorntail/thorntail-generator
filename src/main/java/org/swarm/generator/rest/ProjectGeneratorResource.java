@@ -20,7 +20,7 @@ import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 @Path("/generator")
 public class ProjectGeneratorResource
 {
-   private static final String WILDFLY_SWARM_VERSION = "1.0.0.Beta7";
+   private static final String WILDFLY_SWARM_VERSION = "2016.8.1";
 
    TemplateEngine engine;
 
