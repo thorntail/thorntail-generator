@@ -32,8 +32,8 @@ public class ProjectGeneratorResource {
     @GET
     @Produces("application/zip")
     public Response generate(
-            @QueryParam("g") @NotNull String groupId,
-            @QueryParam("a") @NotNull String artifactId,
+            @QueryParam("g") @NotNull(message = "Parameter 'g' (Group Id) must not be null") String groupId,
+            @QueryParam("a") @NotNull(message = "Parameter 'a' (Artifact Id) must not be null") String artifactId,
             @QueryParam("dep") List<String> dependencies)
             throws Exception {
         Context context = new Context();
