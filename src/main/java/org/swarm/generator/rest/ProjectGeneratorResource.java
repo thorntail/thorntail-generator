@@ -38,6 +38,8 @@ public class ProjectGeneratorResource {
             @QueryParam("a") @DefaultValue("demo") @NotNull(message = "Parameter 'a' (Artifact Id) must not be null") String artifactId,
             @QueryParam("d") List<String> dependencies)
             throws Exception {
+        // Remove empty values
+        dependencies.remove("");
         Context context = new Context();
         context.setVariable("groupId", groupId);
         context.setVariable("artifactId", artifactId);
