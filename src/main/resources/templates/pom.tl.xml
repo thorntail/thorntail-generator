@@ -21,7 +21,7 @@
       <dependency>
         <groupId>org.wildfly.swarm</groupId>
         <artifactId>bom-all</artifactId>
-        <version>${version.wildfly.swarm}</version>
+        <version>${version.wildfly-swarm}</version>
         <scope>import</scope>
         <type>pom</type>
       </dependency>
@@ -34,7 +34,7 @@
       <plugin>
         <groupId>org.wildfly.swarm</groupId>
         <artifactId>wildfly-swarm-plugin</artifactId>
-        <version>${version.wildfly.swarm}</version>
+        <version>${version.wildfly-swarm}</version>
         <executions>
           <execution>
             <goals>
