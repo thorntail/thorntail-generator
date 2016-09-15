@@ -36,7 +36,7 @@ public class ProjectGeneratorResource {
             @QueryParam("sv") @DefaultValue(WILDFLY_SWARM_VERSION) String swarmVersion,
             @QueryParam("g") @DefaultValue("com.example") @NotNull(message = "Parameter 'g' (Group Id) must not be null") String groupId,
             @QueryParam("a") @DefaultValue("demo") @NotNull(message = "Parameter 'a' (Artifact Id) must not be null") String artifactId,
-            @QueryParam("dep") List<String> dependencies)
+            @QueryParam("d") List<String> dependencies)
             throws Exception {
         Context context = new Context();
         context.setVariable("groupId", groupId);

@@ -1,63 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-<modelVersion>4.0.0</modelVersion>
-<groupId th:text="${groupId}">org.swarm.generator</groupId>
-<artifactId th:text="${artifactId}">swarm-generator</artifactId>
-<name>Wildfly Swarm Example</name>
-<version>1.0.0-SNAPSHOT</version>
-<packaging>war</packaging>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId th:text="${groupId}">org.swarm.generator</groupId>
+  <artifactId th:text="${artifactId}">swarm-generator</artifactId>
+  <name>Wildfly Swarm Example</name>
+  <version>1.0.0-SNAPSHOT</version>
+  <packaging>war</packaging>
 
-<properties>
-  <version.wildfly-swarm th:text="${swarmVersion}">${swarmVersion}</version.wildfly-swarm>
-  <maven.compiler.source>1.8</maven.compiler.source>
-  <maven.compiler.target>1.8</maven.compiler.target>
-  <failOnMissingWebXml>false</failOnMissingWebXml>
-  <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-</properties>
+  <properties>
+    <version.wildfly-swarm th:text="${swarmVersion}">${swarmVersion}</version.wildfly-swarm>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <failOnMissingWebXml>false</failOnMissingWebXml>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
 
-<dependencyManagement>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.wildfly.swarm</groupId>
+        <artifactId>bom-all</artifactId>
+        <version>${version.wildfly.swarm}</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <build>
+    <finalName>demo</finalName>
+    <plugins>
+      <plugin>
+        <groupId>org.wildfly.swarm</groupId>
+        <artifactId>wildfly-swarm-plugin</artifactId>
+        <version>${version.wildfly.swarm}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>package</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
   <dependencies>
+    <!-- Java EE 7 dependency -->
     <dependency>
+      <groupId>javax</groupId>
+      <artifactId>javaee-api</artifactId>
+      <version>7.0</version>
+      <scope>provided</scope>
+    </dependency>
+    <!-- Wildfly Swarm Fractions -->
+    <dependency th:each="dep: ${dependencies}">
       <groupId>org.wildfly.swarm</groupId>
-      <artifactId>bom-all</artifactId>
-      <version>${version.wildfly.swarm}</version>
-      <scope>import</scope>
-      <type>pom</type>
+      <artifactId th:text="${dep}">${dep}</artifactId>
     </dependency>
   </dependencies>
-</dependencyManagement>
-
-<build>
-  <finalName>demo</finalName>
-  <plugins>
-    <plugin>
-      <groupId>org.wildfly.swarm</groupId>
-      <artifactId>wildfly-swarm-plugin</artifactId>
-      <version>${version.wildfly.swarm}</version>
-      <executions>
-        <execution>
-          <goals>
-            <goal>package</goal>
-          </goals>
-        </execution>
-      </executions>
-    </plugin>
-  </plugins>
-</build>
-
-<dependencies>
-  <!-- Java EE 7 dependency -->
-  <dependency>
-    <groupId>javax</groupId>
-    <artifactId>javaee-api</artifactId>
-    <version>7.0</version>
-    <scope>provided</scope>
-  </dependency>
-  <!-- Wildfly Swarm Fractions -->
-  <dependency th:each="dep: ${dependencies}">
-    <groupId>org.wildfly.swarm</groupId>
-    <artifactId th:text="${dep}">${dep}</artifactId>
-  </dependency>
-</dependencies>
 </project>
