@@ -33,6 +33,7 @@ public class ProjectGeneratorResource {
     @GET
     @Produces("application/zip")
     public Response generate(
+            @QueryParam("sv") @DefaultValue(WILDFLY_SWARM_VERSION) String swarmVersion,
             @QueryParam("g") @DefaultValue("com.example") @NotNull(message = "Parameter 'g' (Group Id) must not be null") String groupId,
             @QueryParam("a") @DefaultValue("demo") @NotNull(message = "Parameter 'a' (Artifact Id) must not be null") String artifactId,
             @QueryParam("dep") List<String> dependencies)
@@ -41,7 +42,7 @@ public class ProjectGeneratorResource {
         context.setVariable("groupId", groupId);
         context.setVariable("artifactId", artifactId);
         context.setVariable("dependencies", dependencies);
-        context.setVariable("swarmVersion", WILDFLY_SWARM_VERSION);
+        context.setVariable("swarmVersion", swarmVersion);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try (ZipOutputStream zos = new ZipOutputStream(baos)) {
             zos.putNextEntry(new ZipEntry(artifactId + "/src/main/java/"));
