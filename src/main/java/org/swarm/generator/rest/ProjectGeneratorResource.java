@@ -7,6 +7,7 @@ import java.util.zip.ZipOutputStream;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.validation.constraints.NotNull;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -32,8 +33,8 @@ public class ProjectGeneratorResource {
     @GET
     @Produces("application/zip")
     public Response generate(
-            @QueryParam("g") @NotNull(message = "Parameter 'g' (Group Id) must not be null") String groupId,
-            @QueryParam("a") @NotNull(message = "Parameter 'a' (Artifact Id) must not be null") String artifactId,
+            @QueryParam("g") @DefaultValue("com.example") @NotNull(message = "Parameter 'g' (Group Id) must not be null") String groupId,
+            @QueryParam("a") @DefaultValue("demo") @NotNull(message = "Parameter 'a' (Artifact Id) must not be null") String artifactId,
             @QueryParam("dep") List<String> dependencies)
             throws Exception {
         Context context = new Context();
