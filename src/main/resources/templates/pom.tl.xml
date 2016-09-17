@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId th:text="${groupId}">org.swarm.generator</groupId>
   <artifactId th:text="${artifactId}">swarm-generator</artifactId>
-  <name>Wildfly Swarm Example</name>
+  <name>WildFly Swarm Example</name>
   <version>1.0.0-SNAPSHOT</version>
   <packaging>war</packaging>
 
@@ -54,7 +54,7 @@
       <version>7.0</version>
       <scope>provided</scope>
     </dependency>
-    <!-- Wildfly Swarm Fractions -->
+    <!-- WildFly Swarm Fractions -->
     <dependency th:each="dep: ${dependencies}">
       <groupId>org.wildfly.swarm</groupId>
       <artifactId th:text="${dep}">${dep}</artifactId>
