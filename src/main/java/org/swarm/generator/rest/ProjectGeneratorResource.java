@@ -1,7 +1,10 @@
 package org.swarm.generator.rest;
 
 import java.io.ByteArrayOutputStream;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -16,6 +19,7 @@ import javax.ws.rs.core.Response;
 
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
+import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 @ApplicationScoped
@@ -27,7 +31,18 @@ public class ProjectGeneratorResource {
 
     public ProjectGeneratorResource() {
         engine = new TemplateEngine();
-        engine.setTemplateResolver(new ClassLoaderTemplateResolver(getClass().getClassLoader()));
+
+        ClassLoaderTemplateResolver textTemplateResolver = new ClassLoaderTemplateResolver(getClass().getClassLoader());
+        textTemplateResolver.setTemplateMode(TemplateMode.TEXT);
+        Set<String> javaResolvablePattern = new HashSet<>(Arrays.asList("*.java"));
+        textTemplateResolver.setResolvablePatterns(javaResolvablePattern);
+
+        ClassLoaderTemplateResolver xmlTemplateResolver = new ClassLoaderTemplateResolver(getClass().getClassLoader());
+        Set<String> xmlResolvablePattern = new HashSet<>(Arrays.asList("*.xml"));
+        xmlTemplateResolver.setResolvablePatterns(xmlResolvablePattern);
+
+        engine.addTemplateResolver(xmlTemplateResolver);
+        engine.addTemplateResolver(textTemplateResolver);
     }
 
     @GET
@@ -55,7 +70,9 @@ public class ProjectGeneratorResource {
             zos.closeEntry();
 
             if (enableJAXRS(dependencies)) {
-                zos.putNextEntry(new ZipEntry(artifactId + "/src/main/java/com/example/rest/HelloWorldEndpoint.java"));
+                EndpointFilePathGenerator fpg = new EndpointFilePathGenerator(groupId, artifactId);
+                zos.putNextEntry(new ZipEntry(artifactId + fpg.getEndpointFilePath()));
+                context.setVariable("endpointPackage", fpg.getEndpointPackage());
                 zos.write(engine.process("templates/HelloWorldEndpoint.tl.java", context).getBytes());
                 zos.closeEntry();
             }
