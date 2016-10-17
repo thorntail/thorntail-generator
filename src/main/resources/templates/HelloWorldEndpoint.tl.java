@@ -1,4 +1,4 @@
-package com.example.rest;
+package [# th:utext="${endpointPackage}"/];
 
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
