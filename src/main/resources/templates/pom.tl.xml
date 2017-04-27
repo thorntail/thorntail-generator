@@ -35,6 +35,13 @@
         <groupId>org.wildfly.swarm</groupId>
         <artifactId>wildfly-swarm-plugin</artifactId>
         <version>${version.wildfly.swarm}</version>
+        <configuration th:if="${#lists.contains(dependencies,'topology-jgroups')}">
+          <properties>
+            <swarm.bind.address>127.0.0.1</swarm.bind.address>
+            <java.net.preferIPv4Stack>true</java.net.preferIPv4Stack>
+            <jboss.node.name>${project.artifactId}</jboss.node.name>
+          </properties>
+        </configuration>
         <executions>
           <execution>
             <goals>
