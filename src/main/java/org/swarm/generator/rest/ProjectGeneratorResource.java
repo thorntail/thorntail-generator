@@ -71,9 +71,11 @@ public class ProjectGeneratorResource {
 
             if (enableJAXRS(dependencies)) {
                 EndpointFilePathGenerator fpg = new EndpointFilePathGenerator(groupId, artifactId);
-                zos.putNextEntry(new ZipEntry(artifactId + fpg.getEndpointFilePath()));
                 context.setVariable("endpointPackage", fpg.getEndpointPackage());
+                zos.putNextEntry(new ZipEntry(artifactId + fpg.getEndpointFilePath()));
                 zos.write(engine.process("templates/HelloWorldEndpoint.tl.java", context).getBytes());
+                zos.putNextEntry(new ZipEntry(artifactId + fpg.getApplicationPath()));
+                zos.write(engine.process("templates/RestApplication.tl.java", context).getBytes());
                 zos.closeEntry();
             }
         }

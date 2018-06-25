@@ -12,9 +12,11 @@ class EndpointFilePathGenerator {
 
     private static final String SRC_PATH = "/src/main/java";
     private static final String REST_CLASS = "/rest/HelloWorldEndpoint.java";
+    private static final String APPLICATION_CLASS = "/rest/RestApplication.java";
     private static final String REST_PACKAGE = "rest";
 
     private final String endpointFilePath;
+    private final String applicationFilePath;
     private final String endpointPackage;
 
     EndpointFilePathGenerator(String groupId, String artifactId) {
@@ -28,6 +30,12 @@ class EndpointFilePathGenerator {
                 artifactId,
                 REST_CLASS);
 
+        applicationFilePath = String.format("%s/%s/%s%s",
+                SRC_PATH,
+                groupId.replace(".", "/"),
+                artifactId,
+                APPLICATION_CLASS);
+
         endpointPackage = String.format("%s.%s.%s",
                 groupId,
                 artifactId,
@@ -40,5 +48,9 @@ class EndpointFilePathGenerator {
 
     String getEndpointPackage() {
         return endpointPackage;
+    }
+
+    String getApplicationPath() {
+        return applicationFilePath;
     }
 }
