@@ -37,4 +37,12 @@ public class EndpointFilePathGeneratorTest {
         assertEquals("com.mytest.exampleapp.rest",
                 endpointFilePathGenerator.getEndpointPackage());
     }
+
+    @Test
+    public void shouldGenerateRestApplicationPathForValidGroupAndArtifact() {
+        EndpointFilePathGenerator endpointFilePathGenerator = new EndpointFilePathGenerator("com.test", "example");
+
+        assertEquals("/src/main/java/com/test/example/rest/RestApplication.java",
+                endpointFilePathGenerator.getApplicationPath());
+    }
 }
