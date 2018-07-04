@@ -25,7 +25,7 @@ import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 @ApplicationScoped
 @Path("/generator")
 public class ProjectGeneratorResource {
-    private static final String WILDFLY_SWARM_VERSION = "2016.9";
+    private static final String THORNTAIL_VERSION = "2.0.0.Final";
 
     TemplateEngine engine;
 
@@ -48,7 +48,7 @@ public class ProjectGeneratorResource {
     @GET
     @Produces("application/zip")
     public Response generate(
-            @QueryParam("sv") @DefaultValue(WILDFLY_SWARM_VERSION) String swarmVersion,
+            @QueryParam("sv") @DefaultValue(THORNTAIL_VERSION) String thorntailVersion,
             @QueryParam("g") @DefaultValue("com.example") @NotNull(message = "Parameter 'g' (Group Id) must not be null") String groupId,
             @QueryParam("a") @DefaultValue("demo") @NotNull(message = "Parameter 'a' (Artifact Id) must not be null") String artifactId,
             @QueryParam("d") List<String> dependencies)
@@ -59,7 +59,7 @@ public class ProjectGeneratorResource {
         context.setVariable("groupId", groupId);
         context.setVariable("artifactId", artifactId);
         context.setVariable("dependencies", dependencies);
-        context.setVariable("swarmVersion", swarmVersion);
+        context.setVariable("thorntailVersion", thorntailVersion);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try (ZipOutputStream zos = new ZipOutputStream(baos)) {
             zos.putNextEntry(new ZipEntry(artifactId + "/src/main/java/"));
