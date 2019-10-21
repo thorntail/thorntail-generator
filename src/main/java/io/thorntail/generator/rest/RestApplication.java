@@ -1,4 +1,4 @@
-package org.swarm.generator.rest;
+package io.thorntail.generator.rest;
 
 import javax.ws.rs.core.Application;
 import javax.ws.rs.ApplicationPath;

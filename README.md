@@ -1,2 +1,1 @@
-# swarm-generator
-Swarm Generator Server-side
+# Thorntail Generator
